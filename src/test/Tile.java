@@ -1,4 +1,5 @@
 package test;
+import java.util.Objects;
 import java.util.Random;
 public class Tile {
     public final char letter;
@@ -9,16 +10,17 @@ public class Tile {
         this.score = score;
     }
 
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        if (!super.equals(object)) return false;
-        Tile tile = (Tile) object;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tile tile = (Tile) o;
         return letter == tile.letter && score == tile.score;
     }
 
+    @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), letter, score);
+        return Objects.hash(letter, score);
     }
 
     public static class Bag {
@@ -27,13 +29,12 @@ public class Tile {
         public int[] scores;
         public Tile[] tiles;
         public int totalTiles = 98;
-
         private static Bag bag = null;
 
         private Bag() {
-            this.letters = new int[]{1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10};
-            this.originalAmountOfLetters = new int[]{1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10};
-            this.scores = new int[] {9, 2, 2, 4, 12, 2, 3, 2, 9, 1, 1, 4, 2, 6, 8, 2, 1, 6, 4, 6, 4, 2, 2, 1, 2, 1};
+            this.scores = new int[]{1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10};
+            this.originalAmountOfLetters = new int[]{9, 2, 2, 4, 12, 2, 3, 2, 9, 1, 1, 4, 2, 6, 8, 2, 1, 6, 4, 6, 4, 2, 2, 1, 2, 1};
+            this.letters = new int[] {9, 2, 2, 4, 12, 2, 3, 2, 9, 1, 1, 4, 2, 6, 8, 2, 1, 6, 4, 6, 4, 2, 2, 1, 2, 1};
             this.tiles = new Tile[26];
             int i=0;
             for(char c = 'A'; c<='Z'; c++, i++) {
@@ -45,27 +46,32 @@ public class Tile {
             if(this.totalTiles==0){
                 return null;
             }
-            Random random = new Random();
+            int randomNum = (int)(Math.random()*26);
             while(true) {
-                int x = random.nextInt(25);
-                if(this.letters[x]>0) {
+                if(this.letters[randomNum]>0) {
                     totalTiles--;
-                    return this.tiles[x];
+                    this.letters[randomNum]--;
+                    return this.tiles[randomNum];
                 }
             }
         }
         public Tile getTile(char c) {
-            if (this.totalTiles != 0){
+            if (this.totalTiles == 0){
+                return null;
+            }
+            if(c > 'Z' || c < 'A'){
                 return null;
             }
             int indexchar = c-'A';
-            if(this.letters[indexchar]==0)
+            if(this.letters[indexchar]==0) {
                 return null;
+            }
             totalTiles--;
+            this.letters[indexchar]--;
             return this.tiles[indexchar];
         }
         public void put(Tile t){
-            if(this.originalAmountOfLetters[t.letter-'A']<this.originalAmountOfLetters[t.letter-'A']){
+            if(this.letters[t.letter-'A']<this.originalAmountOfLetters[t.letter-'A']){
                 this.letters[t.letter-'A']++;
                 this.totalTiles++;
             }
@@ -73,18 +79,19 @@ public class Tile {
         public int size(){
             return this.totalTiles;
         }
+
         public int[] getQuantities(){
-            return this.letters;
+            int[] Quantities = new int[26];
+            System.arraycopy(this.letters, 0, Quantities, 0, 26);
+            return Quantities;
         }
 
         public static Bag getBag(){
-            if(this.bag == null){
+            if(bag == null){
                 bag = new Bag();
             }
             return bag;
         }
-
-
     }
 }
 

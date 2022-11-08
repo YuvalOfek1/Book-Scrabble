@@ -50,7 +50,7 @@ public class MainTrain {
 	}
 	
 	
-	public static void testBoard() {
+	/*public static void testBoard() {
 		Board b = Board.getBoard();
 		if(b!=Board.getBoard())
 			System.out.println("board should be a Singleton (-5)");
@@ -96,11 +96,11 @@ public class MainTrain {
 			System.out.println("problem in placeWord for 5th word (-15)");
 		
 
-	}
+	}*/
 
 	public static void main(String[] args) {
 		testBag(); // 30 points
-		testBoard(); // 70 points
+		//testBoard(); // 70 points
 		System.out.println("done");				
 	}
 
