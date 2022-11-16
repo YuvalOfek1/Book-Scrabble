@@ -10,6 +10,14 @@ public class Tile {
         this.score = score;
     }
 
+    public char getLetter() {
+        return letter;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -28,37 +36,36 @@ public class Tile {
         public int[] originalAmountOfLetters;
         public int[] scores;
         public Tile[] tiles;
-        public int totalTiles = 98;
-        private static Bag bag = null;
+        public int totalTiles;
+        private static Bag single_Bag = null;
 
         private Bag() {
             this.scores = new int[]{1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10};
             this.originalAmountOfLetters = new int[]{9, 2, 2, 4, 12, 2, 3, 2, 9, 1, 1, 4, 2, 6, 8, 2, 1, 6, 4, 6, 4, 2, 2, 1, 2, 1};
             this.letters = new int[] {9, 2, 2, 4, 12, 2, 3, 2, 9, 1, 1, 4, 2, 6, 8, 2, 1, 6, 4, 6, 4, 2, 2, 1, 2, 1};
             this.tiles = new Tile[26];
+            this.totalTiles=98;
             int i=0;
             for(char c = 'A'; c<='Z'; c++, i++) {
                 this.tiles[i] = new Tile(c, this.scores[i]);
             }
         }
-
         public Tile getRand(){
-            if(this.totalTiles==0){
+            if(size()==0){
                 return null;
             }
-            int randomNum = (int)(Math.random()*26);
+            int randomNum;
             while(true) {
+                randomNum = (int)(Math.random()*26);
                 if(this.letters[randomNum]>0) {
                     totalTiles--;
                     this.letters[randomNum]--;
                     return this.tiles[randomNum];
-                }
+                } // else continue look for another tile.
             }
         }
         public Tile getTile(char c) {
-            if (this.totalTiles == 0){
-                return null;
-            }
+
             if(c > 'Z' || c < 'A'){
                 return null;
             }
@@ -71,26 +78,26 @@ public class Tile {
             return this.tiles[indexchar];
         }
         public void put(Tile t){
-            if(this.letters[t.letter-'A']<this.originalAmountOfLetters[t.letter-'A']){
-                this.letters[t.letter-'A']++;
-                this.totalTiles++;
+            if(this.letters[t.letter-'A']==this.originalAmountOfLetters[t.letter-'A']){
+                return;
             }
+            this.letters[t.letter-'A']++;
+            this.totalTiles++;
+
         }
         public int size(){
             return this.totalTiles;
         }
-
         public int[] getQuantities(){
             int[] Quantities = new int[26];
             System.arraycopy(this.letters, 0, Quantities, 0, 26);
             return Quantities;
         }
-
         public static Bag getBag(){
-            if(bag == null){
-                bag = new Bag();
+            if(single_Bag == null){
+                single_Bag = new Bag();
             }
-            return bag;
+            return single_Bag;
         }
     }
 }
