@@ -135,7 +135,7 @@ public class Board {
 
 
         //check if the word is "leaning" on another tile.
-
+        
     }
     //Checks if the whole word is in the board
     public boolean isWordInBorders(Word word){
@@ -170,12 +170,11 @@ public class Board {
         }
         return true;
     }
-    public boolean isWordLeaning(Word word){
+    public boolean legalOverride(Word word){
         int col = word.getCol();
         int row = word.getRow();
         int len = word.getTiles().length;
         boolean flag = false;
-        boolean touches = false;
         if(word.isVertical()) {
             for (int i = 0; i < len; i++) {
                 if(gameBoard[i+row][col].tile!=null){
@@ -199,9 +198,6 @@ public class Board {
         }
         if(flag){
             return true;
-        }
-        for(int i=0;i<size;i++){
-
         }
         //Now we know that the whole word has placed on null squares, we have to check if it leans on other tile(s)
 
