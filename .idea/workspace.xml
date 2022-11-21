@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b30f1506-5f38-4869-961f-656daf4fed38" name="Changes" comment="board class">
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/Word.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/Word.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +28,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Yuval/OneDrive - cs.colman.ac.il/Desktop/אקדמיה/B.sc CS COLMAN/שנה ב/I פתמ/Pinzeta2/assignment/BinaryExpression.java&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Yuval/OneDrive - cs.colman.ac.il/Desktop/אקדמיה/B.sc CS COLMAN/שנה ב/I פתמ/test&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
   }
 }</component>
@@ -81,6 +81,12 @@
       <workItem from="1668615235165" duration="20000" />
       <workItem from="1668615314105" duration="75000" />
       <workItem from="1668636078891" duration="3316000" />
+      <workItem from="1668781910965" duration="81000" />
+      <workItem from="1668782398902" duration="650000" />
+      <workItem from="1668849060918" duration="21000" />
+      <workItem from="1668855161285" duration="240000" />
+      <workItem from="1668949780411" duration="3787000" />
+      <workItem from="1668972977171" duration="2437000" />
     </task>
     <task id="LOCAL‎-00001" summary="Initialization">
       <created>1667681988775</created>
@@ -125,16 +131,5 @@
     <MESSAGE value="tile and word are done.&#10;changed x to randumNum in tile, and used math.random." />
     <MESSAGE value="board class" />
     <option name="LAST_COMMIT_MESSAGE" value="board class" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/Board.java</url>
-          <line>17</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

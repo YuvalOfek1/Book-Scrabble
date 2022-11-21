@@ -19,6 +19,7 @@ public class Word {
         this.vertical = vertical;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

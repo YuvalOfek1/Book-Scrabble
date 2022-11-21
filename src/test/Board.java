@@ -124,12 +124,14 @@ public class Board {
         int col = word.getCol();
         int row = word.getRow();
         int len = word.getTiles().length;
-        //If the center square is null - so its the first turn -
+        if(word.getTiles().length<2)
+            return false;
+        //If the center square is null - so it's the first turn -
         // we must check that the word pass in the Star square
-        if(gameBoard[7][7].getTile()==null && !isWordOnStarSquare(word)){
+        if(!isWordInBorders(word)){
             return false;
         }
-        if(!isWordInBorders(word)){
+        if(gameBoard[7][7].getTile()==null && !isWordOnStarSquare(word)){
             return false;
         }
 
@@ -174,6 +176,8 @@ public class Board {
         int col = word.getCol();
         int row = word.getRow();
         int len = word.getTiles().length;
+
+
         boolean flag = false;
         if(word.isVertical()) {
             for (int i = 0; i < len; i++) {
@@ -183,7 +187,6 @@ public class Board {
                         return false;
                     }
                 }
-
             }
         }
         else {
@@ -200,7 +203,6 @@ public class Board {
             return true;
         }
         //Now we know that the whole word has placed on null squares, we have to check if it leans on other tile(s)
-
     }
 
     //This class represents every square in the board - it has a Tile and a color
