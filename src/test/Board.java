@@ -1,31 +1,34 @@
 package test;
 
 
+import java.util.ArrayList;
+
 public class Board {
 
     private static final int size = 15;
-    private boardSquare[][] gameBoard;
+    private BoardSquare[][] gameBoard;
     private static Board single_Board = null;
 
-    //Builds the board
-    public Board(){
-        gameBoard = new boardSquare[size][size];
-        buildBoard();
-    }
 
-    //Gives a reference to the board - or creates it
-    public static Board getBoard(){
-        if(single_Board==null){
+    //Gives a reference to the board - or creates it - Single Tone
+    public static Board getBoard() {
+        if (single_Board == null) {
             single_Board = new Board();
         }
         return single_Board;
     }
 
+    //Builds the board
+    public Board() {
+        gameBoard = new BoardSquare[size][size];
+        buildBoard();
+    }
+
     //Assigning all the squares according to the given template.
-    public void buildBoard(){
-        for(int i=0;i<size;i++) {
+    public void buildBoard() {
+        for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                gameBoard[i][j] = new boardSquare();
+                gameBoard[i][j] = new BoardSquare();
             }
         }
 
@@ -104,14 +107,13 @@ public class Board {
     }
 
     //Creates a 2-D array of tiles and copy the status of the tiles in the board;
-    public Tile[][] getTiles(){
+    public Tile[][] getTiles() {
         Tile[][] theTiles = new Tile[size][size];
-        for(int i=0;i<size;i++){
-            for(int j=0;j<size;j++){
-                if(gameBoard[i][j].tile!=null){
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (gameBoard[i][j].tile != null) {
                     theTiles[i][j] = gameBoard[i][j].getTile();
-                }
-                else{
+                } else {
                     theTiles[i][j] = null;
                 }
             }
@@ -120,59 +122,259 @@ public class Board {
 
     }
 
-    public boolean boardLegal(Word word){
+    //checks if the word assignment on the board is legal
+    public boolean boardLegal(Word word) {
         int col = word.getCol();
         int row = word.getRow();
         int len = word.getTiles().length;
-        if(word.getTiles().length<2)
+        if (word.getTiles().length < 2)
             return false;
         //If the center square is null - so it's the first turn -
         // we must check that the word pass in the Star square
-        if(!isWordInBorders(word)){
+        if (!isWordInBorders(word)) {
             return false;
         }
-        if(gameBoard[7][7].getTile()==null && !isWordOnStarSquare(word)){
-            return false;
+        if (gameBoard[7][7].getTile() == null) {
+            return isWordOnStarSquare(word);
         }
 
-
-        //check if the word is "leaning" on another tile.
-        
+        //not the first word on the boarder
+        return (isLeaning(word) && donotReplaceLetter(word));
+        /*if(!donotReplaceLetter(word)){//changes the word
+            return false;
+        }
+        if(!isLeaning(word){
+            return false;
+        }
+        return true;*/
     }
-    //Checks if the whole word is in the board
-    public boolean isWordInBorders(Word word){
+
+    private int getScore(Word word) {
+        int sum=0;
+        int mul=1;
         int col = word.getCol();
         int row = word.getRow();
         int len = word.getTiles().length;
-        if(col<0 || col > 14 || row<0 || row>14){
-            return false;
+        for(int i=0;i<len;i++){
+            switch (gameBoard[row][col].color){
+                case 1:
+                    sum+=word.getTiles()[i].getScore()*2;
+                    break;
+                case 2:
+                    sum+=word.getTiles()[i].getScore()*3;
+                    break;
+                case 3:
+                    mul*=2;
+                    sum+=word.getTiles()[i].getScore();
+                    break;
+                case 4:
+                    mul*=3;
+                    sum+=word.getTiles()[i].getScore();
+                    break;
+                case 5:
+                    sum+=word.getTiles()[i].getScore();
+                    if(gameBoard[7][7].getTile()==null){
+                        mul*=2;
+                    }
+                    break;
+                default:
+                    sum+=word.getTiles()[i].getScore();
+            }
+            if(word.isVertical())
+                row++;
+            else
+                col++;
         }
-        if(word.isVertical()&&len>size-row){
-            return false;
-        }
-        if((!word.isVertical())&&len>size-col){
-            return false;
-        }
+        return sum*mul;
+    }
+
+    public boolean dictionaryLegal(Word word) {
         return true;
     }
-    public boolean isWordOnStarSquare(Word word){
+
+    private ArrayList<Word> getWords(Word word) {
+        ArrayList<Word> createdWords = new ArrayList<Word>();
         int col = word.getCol();
         int row = word.getRow();
-        int len = word.getTiles().length;
+        for (int i = 0; i < word.getTiles().length; i++) {
+            if (word.getTiles()[i] != null) {
+                if(word.isVertical()) {
+                    if (col - 1 >= 0 && gameBoard[row][col - 1].getTile() != null) { //left
+                        createdWords.add(leftWord(row, col));
+                    } else {
+                        if (col + 1 < size && gameBoard[row][col + 1].getTile() != null) { // right
+                            createdWords.add(rightWord(row, col));
+                        }
+                    }
+                }
+                else {
+                    if (row - 1 >= 0 && gameBoard[row - 1][col].getTile() != null) { //top
+                        createdWords.add(topWord(row, col));
+                    }
+                    else {
+                        if (row + 1 < size && gameBoard[row + 1][col].getTile() != null) { //bottom
+                            createdWords.add(bottomWord(row, col));
+                        }
+                    }
+                }
 
-        if(word.isVertical()){
-            if(col!=7 || row > 7 || row+size-1 <7) {
-                return false;
+            }
+            if(word.isVertical())
+                row++;
+            else{
+                col++;
+            }
+
+        }
+        createdWords.add(fullWord(word));
+        return createdWords;
+    }
+
+    public int tryPlaceWord(Word word){
+        ArrayList<Word> createdWords = new ArrayList<Word>();
+        int sum=0;
+        if(boardLegal(word)){
+            createdWords = getWords(word);
+            for(Word w:createdWords){
+                if(!dictionaryLegal(w)){
+                    return 0;
+                }
+                else{
+                    sum+=getScore(w);
+                }
             }
         }
         else{
-            if(row != 7 || col > 7 || col + size - 1 < 7){
+            return 0;
+        }
+        for(int i=0;i<createdWords.size();i++){
+            wordPlacing(createdWords.get(i));
+        }
+        return sum;
+    }
+
+    private void wordPlacing(Word word){
+        int row = word.getRow();
+        int col = word.getCol();
+        int len = word.getTiles().length;
+        for(int i=0;i<len;i++){
+            if(gameBoard[row][col].getTile()==null){
+                gameBoard[row][col].setTile(word.getTiles()[i]);
+            }
+            if(word.isVertical())
+                row++;
+            else{
+                col++;
+            }
+        }
+    }
+
+    private Word leftWord(int row, int col) {
+        Word toReturn;
+        Tile[] wordTiles;
+        int startCol;
+        int len;
+
+        while (col - 1 >= 0 && gameBoard[row][col - 1] != null)
+            col--;
+        startCol = col;
+        while (col + 1 < size && gameBoard[row][startCol + 1] != null)
+            col++;
+        len = col - startCol + 1;
+        wordTiles = new Tile[len];
+        for (int i = 0; i < len; i++) {
+            wordTiles[i] = gameBoard[row][startCol + i].getTile();
+        }
+        toReturn = new Word(wordTiles, row, startCol, false);
+        return toReturn;
+    }
+
+    private Word rightWord(int row, int col) {
+        Word toReturn;
+        Tile[] wordTiles;
+        int startCol = col;
+        int len;
+        while (col + 1 < size && gameBoard[row][col + 1] != null)
+            col++;
+        len = col - startCol + 1;
+        wordTiles = new Tile[len];
+        for (int i = 0; i < len; i++) {
+            wordTiles[i] = gameBoard[row][col + i].getTile();
+        }
+        toReturn = new Word(wordTiles, row, startCol, false);
+        return toReturn;
+    }
+
+    private Word topWord(int row, int col) {
+        Word toReturn;
+        Tile[] wordTiles;
+        int startRow;
+        int len;
+        while (row - 1 >= 0 && gameBoard[row - 1][col].getTile() != null)
+            row--;
+        startRow = row;
+        while (row + 1 < size && gameBoard[row + 1][col].getTile() != null)
+            row++;
+        len = row - startRow + 1;
+        wordTiles = new Tile[len];
+        for (int i = 0; i < len; i++) {
+            wordTiles[i] = gameBoard[startRow + i][col].getTile();
+        }
+        toReturn = new Word(wordTiles, startRow, col, true);
+        return toReturn;
+    }
+
+    private Word bottomWord(int row, int col) {
+        Word toReturn;
+        Tile[] wordTiles;
+        int startRow = row;
+        int len;
+        while (row + 11 < size && gameBoard[row + 1][col] != null)
+            row++;
+        len = row - startRow + 1;
+        wordTiles = new Tile[len];
+        for (int i = 0; i < len; i++) {
+            wordTiles[i] = gameBoard[startRow + i][col].getTile();
+        }
+        toReturn = new Word(wordTiles, startRow, col, true);
+        return toReturn;
+    }
+
+    //Checks if the whole word is in the board
+    private boolean isWordInBorders(Word word) {
+        int col = word.getCol();
+        int row = word.getRow();
+        int len = word.getTiles().length;
+        if (col < 0 || col > 14 || row < 0 || row > 14) {
+            return false;
+        }
+        if (word.isVertical() && len > size - row) {
+            return false;
+        }
+        if ((!word.isVertical()) && len > size - col) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isWordOnStarSquare(Word word) {
+        int col = word.getCol();
+        int row = word.getRow();
+        int len = word.getTiles().length;
+
+        if (word.isVertical()) {
+            if (col != 7 || row > 7 || row + size - 1 < 7) {
+                return false;
+            }
+        } else {
+            if (row != 7 || col > 7 || col + size - 1 < 7) {
                 return false;
             }
         }
         return true;
     }
-    public boolean legalOverride(Word word){
+
+    /*public boolean legalOverride(Word word){
         int col = word.getCol();
         int row = word.getRow();
         int len = word.getTiles().length;
@@ -203,31 +405,101 @@ public class Board {
             return true;
         }
         //Now we know that the whole word has placed on null squares, we have to check if it leans on other tile(s)
+    }*/
+    //checks that the word doesnt "overrides" any letters
+    private boolean donotReplaceLetter(Word word) {
+        if (word.isVertical()) {
+            for (int i = 0; i < word.getTiles().length; i++) {
+                if (word.getTiles()[i] != null && gameBoard[word.getRow() + i][word.getCol()].getTile() != null)
+                    return false;
+                if (word.getTiles()[i] == null && gameBoard[word.getRow() + i][word.getCol()].getTile() == null)
+                    return false;
+            }
+        } else {
+            for (int i = 0; i < word.getTiles().length; i++) {
+                if (word.getTiles()[i] != null && gameBoard[word.getRow()][word.getCol() + i].getTile() != null)
+                    return false;
+                if (word.getTiles()[i] == null && gameBoard[word.getRow()][word.getCol() + i].getTile() == null)
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isLeaning(Word word) {
+        int row = word.getRow();
+        int col = word.getCol();
+        for (int i = 0; i < word.getTiles().length; i++) {
+            if (row - 1 >= 0 && gameBoard[row - 1][col].getTile() != null)
+                return true;
+            if (row + 1 >= 0 && gameBoard[row + 1][col].getTile() != null)
+                return true;
+            if (col - 1 >= 0 && gameBoard[row][col - 1].getTile() != null)
+                return true;
+            if (col + 1 >= 0 && gameBoard[row][col + 1].getTile() != null)
+                return true;
+
+            if (word.isVertical()) {
+                row += 1;
+            } else {
+                col += 1;
+            }
+        }
+        return false;
+    }
+
+    private Word fullWord(Word word) {
+        int len = word.getTiles().length;
+        int col = word.getCol();
+        int row = word.getRow();
+        Word fullWord;
+        Tile[] fullWordTiles = new Tile[len];
+        for (int i = 0; i < len; i++) {
+            if (word.getTiles()[i] != null) {
+                fullWordTiles[i] = word.getTiles()[i];
+            }
+            else {
+                if (word.isVertical()) {
+                    fullWordTiles[i] = gameBoard[row + i][col].getTile();
+                } else {
+                    fullWordTiles[i] = gameBoard[row][col + i].getTile();
+                }
+
+            }
+        }
+        fullWord = new Word(fullWordTiles,row,col,word.isVertical());
+        return fullWord;
     }
 
     //This class represents every square in the board - it has a Tile and a color
-    public static class boardSquare{
+    public static class BoardSquare {
         private int color;
         private Tile tile;
-        public boardSquare(){
+
+        public BoardSquare() {
             color = 0;
-            tile=null;
+            tile = null;
         }
+
+        // Green = 0
         // Cyan - 1
         //Blue - 2
         //Yellow - 3
         //Red - 4
         //Star - 5
-        public void setColor(int color){
-            if(color>=1 && color<=5)
+        public void setColor(int color) {
+            if (color >= 1 && color <= 5)
                 this.color = color;
         }
+
         public void setTile(Tile tile) {
             this.tile = tile;
         }
+
         public int getColor() {
             return color;
         }
+
         public Tile getTile() {
             return tile;
         }
