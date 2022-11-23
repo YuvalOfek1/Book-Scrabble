@@ -149,6 +149,7 @@ public class Board {
         return true;*/
     }
 
+    //get the whole score for placing the word
     private int getScore(Word word) {
         int sum=0;
         int mul=1;
@@ -188,10 +189,12 @@ public class Board {
         return sum*mul;
     }
 
+    //check if the word is a valid word from the game dictionary
     public boolean dictionaryLegal(Word word) {
         return true;
     }
 
+    //gets all the possible word that are created if we would place the given word
     private ArrayList<Word> getWords(Word word) {
         ArrayList<Word> createdWords = new ArrayList<Word>();
         int col = word.getCol();
@@ -200,7 +203,7 @@ public class Board {
             if (word.getTiles()[i] != null) {
                 if(word.isVertical()) {
                     if (col - 1 >= 0 && gameBoard[row][col - 1].getTile() != null) { //left
-                        createdWords.add(leftWord(row, col));
+                        createdWords.add(leftWord(row, col, word, i));
                     } else {
                         if (col + 1 < size && gameBoard[row][col + 1].getTile() != null) { // right
                             createdWords.add(rightWord(row, col, word, i));
@@ -230,6 +233,7 @@ public class Board {
         return createdWords;
     }
 
+    //checks all the condition and tries to place the word. return the score by placing that word.
     public int tryPlaceWord(Word word){
         ArrayList<Word> createdWords = new ArrayList<Word>();
         int sum=0;
@@ -253,6 +257,7 @@ public class Board {
         return sum;
     }
 
+    //really placing the word.
     private void wordPlacing(Word word){
         int row = word.getRow();
         int col = word.getCol();
@@ -269,26 +274,30 @@ public class Board {
         }
     }
 
-    private Word leftWord(int row, int col) {
+    //finds new word from left
+    private Word leftWord(int row, int col, Word w, int index) {
         Word toReturn;
         Tile[] wordTiles;
-        int startCol;
+        int startCol = col;
+        int endCol = col;
         int len;
 
-        while (col - 1 >= 0 && gameBoard[row][col - 1] != null)
-            col--;
-        startCol = col;
-        while (col + 1 < size && gameBoard[row][startCol + 1] != null)
-            col++;
-        len = col - startCol + 1;
+        while (startCol - 1 >= 0 && gameBoard[row][col - 1] != null)
+            startCol--;
+        while ((endCol + 1 < size && gameBoard[row][startCol + 1] != null) || endCol<col)
+            endCol++;
+        len = endCol - startCol + 1;
         wordTiles = new Tile[len];
         for (int i = 0; i < len; i++) {
             wordTiles[i] = gameBoard[row][startCol + i].getTile();
+            if(wordTiles[i]==null)
+                wordTiles[i] = w.getTiles()[index];
         }
         toReturn = new Word(wordTiles, row, startCol, false);
         return toReturn;
     }
 
+    //finds new word from right
     private Word rightWord(int row, int col, Word w, int index) {
         Word toReturn;
         Tile[] wordTiles;
@@ -309,6 +318,7 @@ public class Board {
         return toReturn;
     }
 
+    //finds new word from top
     private Word topWord(int row, int col, Word w, int index) {
         Word toReturn;
         Tile[] wordTiles;
@@ -334,6 +344,7 @@ public class Board {
         return toReturn;
     }
 
+    //finds new word from bottom
     private Word bottomWord(int row, int col, Word w, int index) {
         Word toReturn;
         Tile[] wordTiles;
@@ -371,6 +382,7 @@ public class Board {
         return true;
     }
 
+    //checks if the word is placed on the Star Square (middle square)
     private boolean isWordOnStarSquare(Word word) {
         int col = word.getCol();
         int row = word.getRow();
@@ -388,39 +400,7 @@ public class Board {
         return true;
     }
 
-    /*public boolean legalOverride(Word word){
-        int col = word.getCol();
-        int row = word.getRow();
-        int len = word.getTiles().length;
-
-
-        boolean flag = false;
-        if(word.isVertical()) {
-            for (int i = 0; i < len; i++) {
-                if(gameBoard[i+row][col].tile!=null){
-                    flag = true;
-                    if(gameBoard[i+row][col].tile.letter!=word.getTiles()[i].letter) {
-                        return false;
-                    }
-                }
-            }
-        }
-        else {
-            for (int i = 0; i < len; i++) {
-                if(gameBoard[row][i+col].tile!=null){
-                    flag = true;
-                    if(gameBoard[row][i+col].tile.letter!=word.getTiles()[i].letter) {
-                        return false;
-                    }
-                }
-            }
-        }
-        if(flag){
-            return true;
-        }
-        //Now we know that the whole word has placed on null squares, we have to check if it leans on other tile(s)
-    }*/
-    //checks that the word doesn't "overrides" any letters
+    //checks that the word doesn't change any letter
     private boolean donotReplaceLetter(Word word) {
         if (word.isVertical()) {
             for (int i = 0; i < word.getTiles().length; i++) {
@@ -440,6 +420,7 @@ public class Board {
         return true;
     }
 
+    //checks if the word leans on another word (or uses any letter of it)
     private boolean isLeaning(Word word) {
         int row = word.getRow();
         int col = word.getCol();
@@ -462,6 +443,7 @@ public class Board {
         return false;
     }
 
+    //gets the full word without null tiles
     private Word fullWord(Word word) {
         int len = word.getTiles().length;
         int col = word.getCol();

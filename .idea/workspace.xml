@@ -4,7 +4,6 @@
     <list default="true" id="b30f1506-5f38-4869-961f-656daf4fed38" name="Changes" comment="board class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/MainTrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/MainTrain.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +91,7 @@
       <workItem from="1669119872931" duration="12950000" />
       <workItem from="1669145698514" duration="12305000" />
       <workItem from="1669159073373" duration="1710000" />
-      <workItem from="1669218663200" duration="4815000" />
+      <workItem from="1669218663200" duration="5892000" />
     </task>
     <task id="LOCAL‎-00001" summary="Initialization">
       <created>1667681988775</created>
