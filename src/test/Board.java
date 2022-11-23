@@ -304,7 +304,7 @@ public class Board {
         int startCol = col;
         int endCol = col;
         int len;
-        while (endCol + 1 < size && gameBoard[row][col + 1].getTile() != null)
+        while (endCol + 1 < size && gameBoard[row][endCol + 1].getTile() != null)
             endCol++;
         len = endCol - startCol + 1;
         wordTiles = new Tile[len];
