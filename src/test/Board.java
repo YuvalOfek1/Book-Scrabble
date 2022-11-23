@@ -164,12 +164,12 @@ public class Board {
                     sum+=word.getTiles()[i].getScore()*3;
                     break;
                 case 3:
-                    mul*=2;
                     sum+=word.getTiles()[i].getScore();
+                    mul*=2;
                     break;
                 case 4:
-                    mul*=3;
                     sum+=word.getTiles()[i].getScore();
+                    mul*=3;
                     break;
                 case 5:
                     sum+=word.getTiles()[i].getScore();
@@ -203,17 +203,17 @@ public class Board {
                         createdWords.add(leftWord(row, col));
                     } else {
                         if (col + 1 < size && gameBoard[row][col + 1].getTile() != null) { // right
-                            createdWords.add(rightWord(row, col));
+                            createdWords.add(rightWord(row, col, word, i));
                         }
                     }
                 }
                 else {
                     if (row - 1 >= 0 && gameBoard[row - 1][col].getTile() != null) { //top
-                        createdWords.add(topWord(row, col));
+                        createdWords.add(topWord(row, col, word, i));
                     }
                     else {
                         if (row + 1 < size && gameBoard[row + 1][col].getTile() != null) { //bottom
-                            createdWords.add(bottomWord(row, col));
+                            createdWords.add(bottomWord(row, col, word, i));
                         }
                     }
                 }
@@ -289,52 +289,66 @@ public class Board {
         return toReturn;
     }
 
-    private Word rightWord(int row, int col) {
+    private Word rightWord(int row, int col, Word w, int index) {
         Word toReturn;
         Tile[] wordTiles;
         int startCol = col;
+        int endCol = col;
         int len;
-        while (col + 1 < size && gameBoard[row][col + 1] != null)
-            col++;
-        len = col - startCol + 1;
+        while (endCol + 1 < size && gameBoard[row][col + 1].getTile() != null)
+            endCol++;
+        len = endCol - startCol + 1;
         wordTiles = new Tile[len];
         for (int i = 0; i < len; i++) {
             wordTiles[i] = gameBoard[row][col + i].getTile();
+            if(wordTiles[i]==null){
+                wordTiles[i] = w.getTiles()[index];
+            }
         }
         toReturn = new Word(wordTiles, row, startCol, false);
         return toReturn;
     }
 
-    private Word topWord(int row, int col) {
+    private Word topWord(int row, int col, Word w, int index) {
         Word toReturn;
         Tile[] wordTiles;
-        int startRow;
+        int startRow = row;
+        int endRow = row;
         int len;
-        while (row - 1 >= 0 && gameBoard[row - 1][col].getTile() != null)
-            row--;
-        startRow = row;
-        while (row + 1 < size && gameBoard[row + 1][col].getTile() != null)
-            row++;
-        len = row - startRow + 1;
+
+
+
+        while (startRow - 1 >= 0 && gameBoard[startRow - 1][col].getTile() != null)
+            startRow--;
+        while ((endRow + 1 < size && gameBoard[endRow + 1][col].getTile() != null) || endRow<row)
+            endRow++;
+        len = endRow - startRow + 1;
         wordTiles = new Tile[len];
         for (int i = 0; i < len; i++) {
             wordTiles[i] = gameBoard[startRow + i][col].getTile();
+            if(wordTiles[i]==null)
+                wordTiles[i]=w.getTiles()[index];
         }
+
         toReturn = new Word(wordTiles, startRow, col, true);
         return toReturn;
     }
 
-    private Word bottomWord(int row, int col) {
+    private Word bottomWord(int row, int col, Word w, int index) {
         Word toReturn;
         Tile[] wordTiles;
         int startRow = row;
+        int endRow = row;
         int len;
-        while (row + 11 < size && gameBoard[row + 1][col] != null)
-            row++;
-        len = row - startRow + 1;
+        while (endRow + 1 < size && gameBoard[endRow + 1][col].getTile() != null)
+            endRow++;
+        len = endRow - startRow + 1;
         wordTiles = new Tile[len];
         for (int i = 0; i < len; i++) {
             wordTiles[i] = gameBoard[startRow + i][col].getTile();
+            if(wordTiles[i]==null){
+                wordTiles[i] = w.getTiles()[index];
+            }
         }
         toReturn = new Word(wordTiles, startRow, col, true);
         return toReturn;
@@ -406,7 +420,7 @@ public class Board {
         }
         //Now we know that the whole word has placed on null squares, we have to check if it leans on other tile(s)
     }*/
-    //checks that the word doesnt "overrides" any letters
+    //checks that the word doesn't "overrides" any letters
     private boolean donotReplaceLetter(Word word) {
         if (word.isVertical()) {
             for (int i = 0; i < word.getTiles().length; i++) {

@@ -91,6 +91,8 @@
       <workItem from="1669057019811" duration="4783000" />
       <workItem from="1669119872931" duration="12950000" />
       <workItem from="1669145698514" duration="12305000" />
+      <workItem from="1669159073373" duration="1710000" />
+      <workItem from="1669218663200" duration="4815000" />
     </task>
     <task id="LOCAL‎-00001" summary="Initialization">
       <created>1667681988775</created>
@@ -141,8 +143,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/MainTrain.java</url>
-          <line>78</line>
-          <option name="timeStamp" value="3" />
+          <line>77</line>
+          <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
