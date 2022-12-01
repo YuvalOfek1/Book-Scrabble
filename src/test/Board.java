@@ -204,6 +204,8 @@ public class Board {
             if (word.getTiles()[i] != null) {
                 if(word.isVertical()){
                     if(i==0 && row>0 && gameBoard[row-1][col].tile!=null || i==word.getTiles().length-1 && row<14 && gameBoard[row+1][col].tile!=null){
+                        if(flag)
+                            continue;
                         createdWords.add(getWord(row, col, word, i, true));
                         flag = true;
                     }
@@ -215,6 +217,8 @@ public class Board {
                 else{
                     if(i==0 && col>0 && gameBoard[row][col-1].tile!=null || i==word.getTiles().length-1 && col<14 && gameBoard[row][col+1].tile!=null){
                         createdWords.add(getWord(row, col, word, i, false));
+                        if(flag)
+                            continue;
                         flag = true;
                     }
                     if(row>0 && gameBoard[row-1][col].tile!=null || row<14 && gameBoard[row+1][col].tile!=null){
@@ -263,9 +267,13 @@ public class Board {
                 if(gameBoard[startRow+j][col].tile==null){
                     tiles[j] = word.getTiles()[index];
                     index++;
+                    while(index<word.getTiles().length-1 && word.getTiles()[index]==null){
+                        index++;
+                    }
                 }
-                else
-                    tiles[j] = gameBoard[startRow+j][col].getTile();
+                else {
+                    tiles[j] = gameBoard[startRow + j][col].getTile();
+                }
             }
             return new Word(tiles, startRow, col, true);
         }
@@ -286,6 +294,9 @@ public class Board {
                 if(gameBoard[row][startCol+j].tile==null){
                     tiles[j] = word.getTiles()[index];
                     index++;
+                    while(index<word.getTiles().length-1 && word.getTiles()[index]==null){
+                        index++;
+                    }
                 }
                 else
                     tiles[j] = gameBoard[row][startCol+j].getTile();
