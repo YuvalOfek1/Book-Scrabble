@@ -94,6 +94,8 @@ public class MainTrain {
 		Word bit=new Word(get("BIT"), 10, 4, false);
 		if(b.tryPlaceWord(bit)!=22)
 			System.out.println("problem in placeWord for 5th word (-15)");
+		Word al = new Word(get("G"), 8, 5, false);
+		b.tryPlaceWord(al);
 	}
 
 	public static void main(String[] args) {
