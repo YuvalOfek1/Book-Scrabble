@@ -95,11 +95,14 @@ public class MainTrain {
 		if(b.tryPlaceWord(bit)!=22)
 			System.out.println("problem in placeWord for 5th word (-15)");
 		Word ahi = new Word(get("A_I"), 6, 5, true);
-		b.tryPlaceWord(ahi);
+		if(b.tryPlaceWord(ahi)!=16)
+			System.out.println("problem in placeWord for AHI word (-15)");
 		Word al = new Word(get("AL"), 6, 9, true);
-		b.tryPlaceWord(al);
+		if(b.tryPlaceWord(al)!=16)
+			System.out.println("problem in placeWord for AL word (-15)");
 		Word ran = new Word(get("R_N"), 6, 6, false);
-		b.tryPlaceWord(ran);
+		if(b.tryPlaceWord(ran)!=16)
+			System.out.println("problem in placeWord for RAN word (-15)");
 	}
 
 	public static void main(String[] args) {

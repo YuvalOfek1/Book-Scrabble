@@ -204,9 +204,8 @@ public class Board {
             if (word.getTiles()[i] != null) {
                 if(word.isVertical()){
                     if(i==0 && row>0 && gameBoard[row-1][col].tile!=null || i==word.getTiles().length-1 && row<14 && gameBoard[row+1][col].tile!=null){
-                        if(flag)
-                            continue;
-                        createdWords.add(getWord(row, col, word, i, true));
+                        if(!flag)
+                            createdWords.add(getWord(row, col, word, i, true));
                         flag = true;
                     }
                     if(col>0 && gameBoard[row][col-1].tile!=null || col<14 && gameBoard[row][col+1].tile!=null){
@@ -216,9 +215,8 @@ public class Board {
                 }
                 else{
                     if(i==0 && col>0 && gameBoard[row][col-1].tile!=null || i==word.getTiles().length-1 && col<14 && gameBoard[row][col+1].tile!=null){
-                        createdWords.add(getWord(row, col, word, i, false));
-                        if(flag)
-                            continue;
+                        if(!flag)
+                            createdWords.add(getWord(row, col, word, i, false));
                         flag = true;
                     }
                     if(row>0 && gameBoard[row-1][col].tile!=null || row<14 && gameBoard[row+1][col].tile!=null){
@@ -275,7 +273,7 @@ public class Board {
                     tiles[j] = gameBoard[startRow + j][col].getTile();
                 }
             }
-            return new Word(tiles, startRow, col, true);
+            return new Word(tiles, startRow, col, vertical);
         }
         else{
             if(!word.isVertical()){
@@ -301,7 +299,7 @@ public class Board {
                 else
                     tiles[j] = gameBoard[row][startCol+j].getTile();
             }
-            return new Word(tiles, row, startCol, true);
+            return new Word(tiles, row, startCol, vertical);
         }
 
 
