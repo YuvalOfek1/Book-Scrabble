@@ -9,11 +9,13 @@ import static java.util.Objects.hash;
 
 public class BloomFilter {
 	public BitSet bitSet;
+    int size;
     public String[] hashFuncs;
     BigInteger bigInt;
     MessageDigest md;
     public BloomFilter(int bits, String... algs){
         bitSet = new BitSet(bits);
+        size = bits;
         hashFuncs = new String[algs.length];
         System.arraycopy(algs, 0, hashFuncs, 0, algs.length);
     }
@@ -41,7 +43,7 @@ public class BloomFilter {
             bytes = md.digest(word.getBytes());
             bigInt = new BigInteger(bytes);
             int bigVal = bigInt.intValue();
-            bitSet.set(Math.abs(bigVal)%256);
+            bitSet.set(Math.abs(bigVal)%size);
 
         }
 
