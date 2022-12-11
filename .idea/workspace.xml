@@ -10,6 +10,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -26,7 +31,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Yuval/OneDrive - cs.colman.ac.il/Desktop/אקדמיה/B.sc CS COLMAN/שנה ב/I פתמ/test&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Yuval/OneDrive - cs.colman.ac.il/Desktop/omerBA&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;
   }
@@ -36,13 +41,26 @@
       <recent name="C:\Users\Yuval\OneDrive - cs.colman.ac.il\Desktop\אקדמיה\B.sc CS COLMAN\שנה ב\I פתמ\test\src\test" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.SecondMileStone.MainTrain">
     <configuration name="MainTrain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="test.MainTrain" />
-      <module name="test" />
+      <option name="MAIN_CLASS_NAME" value="FirstMileStone.MainTrain" />
+      <module name="BookScrabble" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="test.*" />
+          <option name="PATTERN" value="FirstMileStone.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SecondMileStone.MainTrain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="SecondMileStone.MainTrain" />
+      <module name="BookScrabble" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="SecondMileStone.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -52,6 +70,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.SecondMileStone.MainTrain" />
+        <item itemvalue="Application.MainTrain" />
+        <item itemvalue="Application.MainTrain" />
         <item itemvalue="Application.MainTrain" />
       </list>
     </recent_temporary>
@@ -91,6 +112,20 @@
       <workItem from="1669145698514" duration="12305000" />
       <workItem from="1669159073373" duration="1710000" />
       <workItem from="1669218663200" duration="6658000" />
+      <workItem from="1669237677983" duration="6527000" />
+      <workItem from="1669291851222" duration="316000" />
+      <workItem from="1669310084270" duration="2806000" />
+      <workItem from="1669324456132" duration="2554000" />
+      <workItem from="1669505940043" duration="3097000" />
+      <workItem from="1669622119844" duration="1352000" />
+      <workItem from="1669732516021" duration="685000" />
+      <workItem from="1669736408343" duration="34000" />
+      <workItem from="1669891149513" duration="1185000" />
+      <workItem from="1669909472396" duration="10182000" />
+      <workItem from="1669980446256" duration="2253000" />
+      <workItem from="1669989399622" duration="795000" />
+      <workItem from="1669994207802" duration="8000" />
+      <workItem from="1670093586136" duration="303000" />
     </task>
     <task id="LOCAL‎-00001" summary="Initialization">
       <created>1667681988775</created>
@@ -135,5 +170,16 @@
     <MESSAGE value="tile and word are done.&#10;changed x to randumNum in tile, and used math.random." />
     <MESSAGE value="board class" />
     <option name="LAST_COMMIT_MESSAGE" value="board class" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/MainTrain.java</url>
+          <line>97</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

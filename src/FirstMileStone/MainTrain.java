@@ -1,6 +1,6 @@
-package test;
+package FirstMileStone;
 
-import test.Tile.Bag;
+import FirstMileStone.Tile.Bag;
 
 public class MainTrain {
 	
@@ -94,6 +94,15 @@ public class MainTrain {
 		Word bit=new Word(get("BIT"), 10, 4, false);
 		if(b.tryPlaceWord(bit)!=22)
 			System.out.println("problem in placeWord for 5th word (-15)");
+		Word ahi = new Word(get("A_I"), 6, 5, true);
+		if(b.tryPlaceWord(ahi)!=16)
+			System.out.println("problem in placeWord for AHI word (-15)");
+		Word al = new Word(get("AL"), 6, 9, true);
+		if(b.tryPlaceWord(al)!=16)
+			System.out.println("problem in placeWord for AL word (-15)");
+		Word ran = new Word(get("R_N"), 6, 6, false);
+		if(b.tryPlaceWord(ran)!=16)
+			System.out.println("problem in placeWord for RAN word (-15)");
 	}
 
 	public static void main(String[] args) {
