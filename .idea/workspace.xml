@@ -3,8 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b30f1506-5f38-4869-961f-656daf4fed38" name="Changes" comment="board class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FirstMileStone/MainTrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FirstMileStone/MainTrain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SecondMileStone/BloomFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecondMileStone/BloomFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SecondMileStone/LFU.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecondMileStone/LFU.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SecondMileStone/LRU.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecondMileStone/LRU.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SecondMileStone/MainTrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SecondMileStone/MainTrain.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,6 +129,7 @@
       <workItem from="1669989399622" duration="795000" />
       <workItem from="1669994207802" duration="8000" />
       <workItem from="1670093586136" duration="303000" />
+      <workItem from="1670749647999" duration="1442000" />
     </task>
     <task id="LOCAL‎-00001" summary="Initialization">
       <created>1667681988775</created>
@@ -180,6 +182,15 @@
           <url>file://$PROJECT_DIR$/src/test/MainTrain.java</url>
           <line>97</line>
           <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/SecondMileStone/MainTrain.java</url>
+          <line>43</line>
+          <properties class="SecondMileStone.MainTrain" method="testLFU">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

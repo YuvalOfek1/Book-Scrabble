@@ -8,7 +8,7 @@ import java.util.Set;
 public class LRU implements CacheReplacementPolicy {
 
     private Set<String> cache;
-    private final int size = 256;
+    //private final int size = 256;
     LRU(){
         cache = new LinkedHashSet<String>();
     }
@@ -25,15 +25,16 @@ public class LRU implements CacheReplacementPolicy {
         if(cache.contains(word)) {
             cache.remove(word);
         }
-        else if(cache.size() == size) {
+        /*else if(cache.size() == size) {
             cache.remove(remove());
-        }
+        }*/
         cache.add(word);
 
     }
     public String remove() {
         // TODO Auto-generated method stub
         String toReturn = cache.iterator().next();
+        cache.remove(toReturn);
         return toReturn;
     }
 

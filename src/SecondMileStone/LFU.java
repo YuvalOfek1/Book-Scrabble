@@ -8,7 +8,7 @@ import java.util.LinkedList;
 public class LFU implements CacheReplacementPolicy {
 
     private LinkedHashMap<String, Integer> cache;
-    private final int size=256;
+    //private final int size=256;
     LFU(){
         cache = new LinkedHashMap<String, Integer>();
     }
@@ -16,17 +16,18 @@ public class LFU implements CacheReplacementPolicy {
     public void add(String word) {
         // TODO Auto-generated method stub
         if(cache.containsKey(word)) {
-            cache.put(word, cache.get(word) + 1);
+            int key = cache.get(word);
+            cache.remove(word);
+            cache.put(word, key+1);
         }
-        else if(cache.size() == size) {
+        /*else if(cache.size() == size) {
             cache.remove(remove());
-        }
+        }*/
         else {
             cache.put(word, 1);
         }
-
-
     }
+
     public String remove(){
         // TODO Auto-generated method stub
         int min = Integer.MAX_VALUE;
@@ -37,7 +38,9 @@ public class LFU implements CacheReplacementPolicy {
                 toReturn = s;
             }
         }
+        cache.remove(toReturn);
         return toReturn;
+
     }
 
 
